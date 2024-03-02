@@ -1,5 +1,5 @@
-# Android Development Essential Training: 5 Storage and Databases
-This is the repository for the LinkedIn Learning course `Android Development Essential Training: 5 Storage and Databases`. The full course is available from [LinkedIn Learning][lil-course-url].
+# Android Development Essential Training
+This is the repository for the LinkedIn Learning course `Android Development Essential Training`. The full course is available from [LinkedIn Learning][lil-course-url].
 
 ![course-name-alt-text][lil-thumbnail-url] 
 
