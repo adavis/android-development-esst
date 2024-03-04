@@ -23,10 +23,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.compose.TwoTreesNavHost
+import com.example.myapplication.compose.home.HomeScreen
 import com.example.myapplication.compose.navigateSingleTopTo
 import com.example.myapplication.compose.screens
 import com.example.myapplication.ui.theme.AppTheme
@@ -117,4 +119,10 @@ fun TwoTreesApp() {
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppPreview() {
+    TwoTreesApp()
 }

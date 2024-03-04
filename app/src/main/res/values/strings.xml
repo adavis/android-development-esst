@@ -10,11 +10,9 @@
         Rosa neighbors who have embraced our business for many decades. Our high ethical standards
         and well-defined values are central to everything we do.
     </string>
-    <string name="enter_label">Enter</string>
     <string name="home_label">Home</string>
     <string name="tours_label">Tours</string>
     <string name="shop_label">Shop</string>
-    <string name="tours_header_label">TOURS</string>
     <string name="tours_content">Imagine your special event hosted against the sun-drenched
         backdrop of a 35-acre olive orchard in the beautiful rolling hills of Northern California.\n\n
         Wake up to songbirds flittering about the lush grounds of our 20-room bed and breakfast, and
@@ -22,7 +20,6 @@
         who’ve thrown some monumental parties and hosted a wide range of events from anniversaries,
         to charity events, to weddings, and much more.
     </string>
-    <string name="shop_header_label">Our products</string>
     <string name="shop_button_label">Continue Shopping</string>
     <string name="cart_content">Don’t forget about using the coupon codes you’ll
         find around our website. They change frequently, but are always a great bargain… if we
