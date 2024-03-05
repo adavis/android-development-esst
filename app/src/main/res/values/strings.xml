@@ -13,6 +13,7 @@
     <string name="home_label">Home</string>
     <string name="tours_label">Tours</string>
     <string name="shop_label">Shop</string>
+    <string name="free_shipping_label">Free shipping on all orders</string>
     <string name="tours_content">Imagine your special event hosted against the sun-drenched
         backdrop of a 35-acre olive orchard in the beautiful rolling hills of Northern California.\n\n
         Wake up to songbirds flittering about the lush grounds of our 20-room bed and breakfast, and
@@ -32,4 +33,5 @@
     <string name="add_to_cart_label">(+) Add</string>
     <string name="storage_permission_granted">Storage permission granted!</string>
     <string name="remove_from_cart_label">(-) Remove</string>
+    <string name="back_button">Back</string>
 </resources>

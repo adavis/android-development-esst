@@ -1,15 +1,14 @@
 package com.example.myapplication.compose.shop
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
@@ -17,91 +16,112 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.myapplication.ProductsUiState
 import com.example.myapplication.R
+import com.example.myapplication.data.Product
 import com.example.myapplication.ui.theme.AppTheme
-import com.example.myapplication.ui.theme.ColorDarkBlue
+import java.text.NumberFormat
 
 @Composable
 fun ShopScreen(
     modifier: Modifier = Modifier,
+    uiState: ProductsUiState,
+    onProductClick: (productId: Product) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = modifier.fillMaxSize(),
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        item(
-            span = { GridItemSpan(2) },
-        ) {
-            Image(
-                painter = painterResource(R.drawable.olive_field),
-                modifier = Modifier
-                    .aspectRatio(16f / 9f),
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
-            )
-        }
-        item(
-            span = { GridItemSpan(2) }
-        ) {
+        item {
             Text(
                 stringResource(R.string.shop_label).uppercase(),
-                modifier = Modifier.fillMaxSize().padding(vertical = 16.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 16.dp),
                 style = MaterialTheme.typography.headlineMedium,
-                color = ColorDarkBlue,
                 fontWeight = FontWeight.Bold
             )
         }
-        (0..4).forEach {
-            item(key = it) {
-                Product()
+        item {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.tertiary)
+            ) {
+                Text(
+                    stringResource(id = R.string.free_shipping_label).uppercase(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 16.dp, horizontal = 4.dp),
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onTertiary,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+        if (uiState is ProductsUiState.Success) {
+            uiState.products.forEach { product ->
+                item {
+                    ProductItem(
+                        product = product,
+                        onProductClick = onProductClick
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun Product() {
+fun ProductItem(
+    product: Product,
+    onProductClick: (product: Product) -> Unit
+) {
     ElevatedCard(
-        onClick = { /*TODO*/ },
+        onClick = { onProductClick(product) },
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(R.drawable.bold_bottle),
-                modifier = Modifier.aspectRatio(1f / 1f),
-                contentScale = ContentScale.Inside,
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(product.imageFile)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = null
             )
             Text(
-                "Bold".uppercase(),
+                product.name.uppercase(),
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
             )
             Text(
-                "500 ml bottle",
+                stringResource(id = R.string.product_size_label, product.size),
                 modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
             )
             Text(
-                "$24.50",
+                NumberFormat.getCurrencyInstance().format(product.price),
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
             )
         }
@@ -112,14 +132,41 @@ fun Product() {
 @Composable
 fun ProductPreview() {
     AppTheme {
-        Product()
+        ProductItem(
+            product = Product(
+                id = 7384,
+                quantity = 59,
+                name = "Constance Chavez",
+                imageFile = "https://2873199.youcanlearnit.net/images/basil_bottle.webp",
+                description = "atomorum",
+                size = 22,
+                price = 20.3
+            ),
+            onProductClick = {}
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun ShopScreenPreview() {
+    val products =
+        listOf(
+            Product(
+                id = 7384,
+                quantity = 59,
+                name = "Chavez",
+                imageFile = "https://2873199.youcanlearnit.net/images/basil_bottle.webp",
+                description = "atomorum",
+                size = 22,
+                price = 20.3
+            )
+        )
+
     AppTheme {
-        ShopScreen()
+        ShopScreen(
+            uiState = ProductsUiState.Success(products),
+            onProductClick = {}
+        )
     }
 }

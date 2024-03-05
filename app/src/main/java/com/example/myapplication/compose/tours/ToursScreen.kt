@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.AppTheme
-import com.example.myapplication.ui.theme.ColorDarkBlue
 
 @Composable
 fun ToursScreen(
@@ -44,7 +43,6 @@ fun ToursScreen(
                 .fillMaxSize()
                 .padding(16.dp),
             style = MaterialTheme.typography.headlineMedium,
-            color = ColorDarkBlue,
             fontWeight = FontWeight.Bold
         )
         Text(

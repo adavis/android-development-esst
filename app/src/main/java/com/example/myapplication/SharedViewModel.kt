@@ -8,6 +8,10 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.Product
 import com.example.myapplication.data.ProductRepository
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class SharedViewModel(val app: Application) : AndroidViewModel(app) {
@@ -16,13 +20,19 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     val selectedProduct: MutableLiveData<Product> = MutableLiveData()
 
-    val products: LiveData<List<Product>> =
-        productRepository.getProducts().asLiveData()
-
     val quantity: LiveData<Int?> =
         productRepository.getTotalQuantity().asLiveData()
 
-    init {
+    val productsState: StateFlow<ProductsUiState> =
+        productRepository.getProducts()
+            .map(ProductsUiState::Success)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = ProductsUiState.Loading,
+            )
+
+    fun loadProducts() {
         viewModelScope.launch {
             productRepository.loadProducts()
         }
@@ -47,4 +57,12 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
             }
         }
     }
+}
+
+sealed interface ProductsUiState {
+    data object Loading : ProductsUiState
+
+    data class Success(
+        val products: List<Product>,
+    ) : ProductsUiState
 }

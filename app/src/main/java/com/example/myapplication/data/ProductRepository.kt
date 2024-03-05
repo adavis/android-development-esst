@@ -2,7 +2,6 @@ package com.example.myapplication.data
 
 import android.app.Application
 import android.util.Log
-import com.example.myapplication.LOG_TAG
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.flow.Flow
@@ -10,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 const val BASE_ENDPOINT_URL = "https://2873199.youcanlearnit.net/"
+const val LOG_TAG = "Two Trees Oil App"
 
 class ProductRepository(app: Application) {
 
