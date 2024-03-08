@@ -21,6 +21,7 @@ fun TwoTreesNavHost(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.productsState.collectAsStateWithLifecycle()
+    val selectedProduct by viewModel.selectedProduct.collectAsStateWithLifecycle()
 
     NavHost(
         navController = navController,
@@ -37,13 +38,13 @@ fun TwoTreesNavHost(
             ShopScreen(
                 uiState = uiState,
                 onProductClick = { product: Product ->
-                    viewModel.selectedProduct.value = product
+                    viewModel.selectProduct(product)
                     navController.navigate(Screen.Product.route)
                 }
             )
         }
         composable(route = Screen.Product.route) {
-            viewModel.selectedProduct.value?.let { product ->
+            selectedProduct?.let { product ->
                 ProductScreen(
                     product,
                     incrementQuantityClick = {

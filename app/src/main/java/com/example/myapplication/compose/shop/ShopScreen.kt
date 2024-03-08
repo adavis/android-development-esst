@@ -100,6 +100,7 @@ fun ProductItem(
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(product.imageFile)
+                    .placeholder(R.drawable.logo)
                     .crossfade(true)
                     .build(),
                 contentDescription = null
