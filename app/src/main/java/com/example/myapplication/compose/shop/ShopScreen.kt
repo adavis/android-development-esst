@@ -34,7 +34,7 @@ import java.text.NumberFormat
 fun ShopScreen(
     modifier: Modifier = Modifier,
     uiState: ProductsUiState,
-    onProductClick: (productId: Product) -> Unit,
+    onProductClick: (product: Product) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = modifier.fillMaxSize(),
