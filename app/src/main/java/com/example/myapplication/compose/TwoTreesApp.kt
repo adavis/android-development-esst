@@ -2,6 +2,7 @@ package com.example.myapplication.compose
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -61,46 +62,11 @@ fun TwoTreesApp(
                 )
             },
             bottomBar = {
-                NavigationBar {
-                    val quantity = viewModel.quantity.collectAsState(initial = null).value
-
-                    screens.forEach { screen ->
-                        val label = stringResource(id = screen.labelResourceId)
-                        NavigationBarItem(
-                            icon = {
-                                BadgedBox(
-                                    badge = {
-                                        if (quantity != null && screen == Screen.Shop) {
-                                            Badge {
-                                                Text(quantity.toString())
-                                            }
-                                        }
-                                    }
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = screen.iconResourceId),
-                                        contentDescription = label
-                                    )
-                                }
-                            },
-                            label = {
-                                Text(label)
-                            },
-                            selected = currentDestination?.hierarchy?.any {
-                                it.route == screen.route
-                            } == true,
-                            onClick = {
-                                navController.navigate(screen.route) {
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            }
-                        )
-                    }
-                }
+                TwoTreesNavBar(
+                    quantity = viewModel.quantity.collectAsState(initial = null).value,
+                    navController = navController,
+                    currentDestination = currentDestination
+                )
             },
             modifier = Modifier
                 .fillMaxSize()
